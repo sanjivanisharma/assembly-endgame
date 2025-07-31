@@ -13,6 +13,19 @@ body {
   height: 100vh;
 }
 
+button {
+  font-family: "Hanken Grotesk", Arial, sans-serif;
+  cursor: pointer;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 36px;
+}
+
 header {
   text-align: center;
 }
@@ -37,7 +50,7 @@ section.game-status {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-block: 30px;
+  width: 350px;
 }
 
 .game-status>h2 {
@@ -62,4 +75,48 @@ section.language-chips {
 section.language-chips .chip {
   border-radius: 3px;
   padding: 4.5px;
+}
+
+section.word {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+}
+
+.word>span {
+  background-color: #323232;
+  height: 40px;
+  width: 40px;
+  border-bottom: 1px solid #F9F4DA;
+  font-size: 1.125rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+section.keyboard {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 470px;
+  gap: 6px;
+}
+
+.keyboard>button {
+  background-color: #FCBA29;
+  border: 1px solid #D7D7D7;
+  height: 40px;
+  width: 40px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+button.new-game {
+  background-color: #11B5E5;
+  border: 1px solid #D7D7D7;
+  width: 280px;
+  height: 40px;
+  border-radius: 4px;
+  font-weight: 600;
 }
