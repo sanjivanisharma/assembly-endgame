@@ -2,26 +2,52 @@ import { useState } from "react"
 
 import { languages } from "./languages"
 
-export default function App() {
-  const [currentWord, setCurrentWord] = useState("Ethylenediamine")
+import clsx from "clsx"
 
+export default function App() {
+  // State values
+  const [currentWord, setCurrentWord] = useState("react")
+  const [guessedLetters, setGuessedLetters] = useState([])
+
+  // Derived values
+  const wrongGuessCount = guessedLetters.reduce((count, letter) => {
+    return !currentWord.includes(letter) ? count + 1 : count
+  }, 0)
+
+  // Static values
   const alphabet = "abcdefghijklmnopqrstuvwxyz"
 
-  const languageElements = languages.map((lang) => (
-    <span
+  function addGuessedLetters(letter) {
+    setGuessedLetters(prevLetters => (
+      prevLetters.includes(letter) ? prevLetters : [...prevLetters, letter]
+    ))
+  }
+
+  const languageElements = languages.map((lang, index) => {
+    const isLanguageLost = index < wrongGuessCount
+
+    return <span
       style={{ backgroundColor: lang.backgroundColor, color: lang.color }}
-      className="chip"
+      className={clsx("chip", isLanguageLost && "lost")}
       key={lang.name}
     >{lang.name}</span>
-  ))
+  })
 
   const wordElements = currentWord.split("").map((letter, index) => (
-    <span key={index}>{letter.toUpperCase()}</span>
+    <span key={index}>{guessedLetters.includes(letter) ? letter.toUpperCase() : ""}</span>
   ))
 
-  const keyboardElements = alphabet.split("").map((alphabet) => (
-    <button key={alphabet}>{alphabet.toUpperCase()}</button>
-  ))
+  const keyboardElements = alphabet.split("").map((alphabet) => {
+    const isGuessed = guessedLetters.includes(alphabet)
+    const isCorrect = isGuessed && currentWord.includes(alphabet)
+    const isWrong = isGuessed && !currentWord.includes(alphabet)
+
+    return <button
+      className={clsx({ "correct": isCorrect, "wrong": isWrong })}
+      onClick={() => addGuessedLetters(alphabet)}
+      key={alphabet}
+    >{alphabet.toUpperCase()}</button>
+  })
 
   return (
     <main>
